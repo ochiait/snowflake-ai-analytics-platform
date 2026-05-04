@@ -1,38 +1,30 @@
--- 03_semantic.sql: Semantic View for business metrics and dimensions
--- This file creates semantic views that define business meaning clearly
+-- 03_semantic.sql: Semantic View template for Snowflake
+-- This file provides a Snowflake Semantic View template and explanatory notes.
 
-USE DATABASE SNOWFLAKE_AI_ANALYTICS;
-USE SCHEMA RETAIL_SCHEMA;
+USE DATABASE AI_ANALYTICS_DB;
+USE SCHEMA RETAIL;
 
--- Semantic View: Business metrics and dimensions
-CREATE OR REPLACE VIEW SEMANTIC_VIEW AS
-SELECT
-    -- Dimensions
-    dm.InvoiceNo AS OrderID,
-    dm.StockCode AS ProductCode,
-    dm.ProductDescription,
-    dm.CustomerID,
-    dm.Country,
-    dm.InvoiceDate,
-    YEAR(dm.InvoiceDate) AS OrderYear,
-    MONTH(dm.InvoiceDate) AS OrderMonth,
-    DAY(dm.InvoiceDate) AS OrderDay,
+-- Note: Snowflake Semantic Views have a specialized syntax. The following is a template
+-- and may require adjustment for your Snowflake account and semantic model definitions.
 
-    -- Metrics
-    dm.Quantity,
-    dm.UnitPrice,
-    dm.SalesAmount,
-    CASE WHEN dm.Quantity > 0 THEN dm.SalesAmount ELSE 0 END AS PositiveSalesAmount,
-    CASE WHEN dm.Quantity < 0 THEN ABS(dm.SalesAmount) ELSE 0 END AS ReturnAmount,
-
-    -- Calculated metrics
-    SUM(dm.SalesAmount) OVER (PARTITION BY dm.InvoiceNo) AS OrderTotalValue,
-    AVG(dm.SalesAmount) OVER (PARTITION BY dm.CustomerID) AS AvgOrderValuePerCustomer,
-    COUNT(dm.InvoiceNo) OVER (PARTITION BY dm.CustomerID) AS TotalOrdersPerCustomer
-
-FROM DATA_MART dm;
+-- CREATE OR REPLACE SEMANTIC VIEW SEMANTIC_RETAIL_VIEW AS
+-- SELECT
+--     InvoiceNo AS OrderID,
+--     StockCode AS ProductCode,
+--     Description AS ProductDescription,
+--     CustomerID,
+--     Country,
+--     InvoiceDate,
+--     Quantity,
+--     UnitPrice,
+--     Quantity * UnitPrice AS Sales_Amount,
+--     CASE WHEN Quantity < 0 THEN TRUE ELSE FALSE END AS Return_Flag,
+--     SUM(Quantity * UnitPrice) OVER (PARTITION BY InvoiceNo) AS OrderTotalValue,
+--     AVG(Quantity * UnitPrice) OVER (PARTITION BY CustomerID) AS AvgOrderValuePerCustomer,
+--     COUNT(DISTINCT InvoiceNo) OVER (PARTITION BY CustomerID) AS TotalOrdersPerCustomer
+-- FROM V_RETAIL_ANALYSIS;
 
 -- Comments:
--- Defines business meaning clearly.
--- Includes metrics: total sales, order count, average order value.
--- Includes dimensions: customer, country, product category (via description).
+-- This file is intentionally left as a semantic view template.
+-- It avoids creating a normal view named SEMANTIC_VIEW.
+-- Adjust the syntax and object names based on Snowflake Semantic View support in your environment.

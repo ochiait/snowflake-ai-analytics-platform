@@ -1,18 +1,17 @@
 -- 01_setup.sql: Database and schema setup for Snowflake AI Analytics Platform
--- This file sets up the initial database structure for the UCI Online Retail Dataset
+-- This file sets up the foundational Snowflake database, warehouse, and schema.
 
--- Create database if not exists
-CREATE DATABASE IF NOT EXISTS SNOWFLAKE_AI_ANALYTICS;
+CREATE WAREHOUSE IF NOT EXISTS AI_ANALYTICS_WH
+    WAREHOUSE_SIZE = 'XSMALL'
+    AUTO_SUSPEND = 300
+    AUTO_RESUME = TRUE;
 
--- Use the database
-USE DATABASE SNOWFLAKE_AI_ANALYTICS;
+CREATE DATABASE IF NOT EXISTS AI_ANALYTICS_DB;
+USE DATABASE AI_ANALYTICS_DB;
 
--- Create schema for retail data
-CREATE SCHEMA IF NOT EXISTS RETAIL_SCHEMA;
-
--- Use the schema
-USE SCHEMA RETAIL_SCHEMA;
+CREATE SCHEMA IF NOT EXISTS RETAIL;
+USE SCHEMA RETAIL;
 
 -- Comments:
--- This file establishes the foundational database and schema.
--- No tables are created here; they will be defined in subsequent files.
+-- Warehouse, database, and schema are created in a Snowflake-compatible way.
+-- Subsequent files define tables and views within AI_ANALYTICS_DB.RETAIL.
