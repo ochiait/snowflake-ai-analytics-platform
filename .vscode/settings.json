@@ -1,0 +1,16 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/__pycache__": true,
+    "**/node_modules": true
+  },
+  "files.autoSave": "afterDelay",
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "markdown.preview.breaks": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true
+  },
+  "explorer.compactFolders": false
+}
